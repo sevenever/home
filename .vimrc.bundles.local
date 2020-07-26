@@ -1,0 +1,8 @@
+" let g:spf13_bundle_groups=['general', 'writing', 'neocomplete', 'programming', 'python', 'javascript', 'html', 'misc',]
+
+"cscope key mapping and generate function.
+Bundle 'chazy/cscope_maps'
+Bundle 'brookhong/cscope.vim'
+
+Plugin 'heracek/HTML-AutoCloseTag', {'name': 'HTML-AutoCloseTag2'}
+UnBundle 'amirh/HTML-AutoCloseTag'

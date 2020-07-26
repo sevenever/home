@@ -1,0 +1,10 @@
+let g:spf13_bundle_groups=['general', 'writing', 'neocomplete', 'programming', 'python', 'javascript', 'html', 'misc',]
+"let g:spf13_bundle_groups=['general', 'writing', 'neocomplete', 'programming', 'python', 'misc',]
+
+let g:airline_powerline_fonts=1
+
+"has('python3')
+
+let g:pymode_python = 'python3'
+
+

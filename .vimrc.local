@@ -1,0 +1,141 @@
+" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+
+nnoremap Q <nop>
+
+set fileencodings=ucs-bom,utf-8,gb2312,gb18030,gbk,cp936,default,latin1
+
+" for brookhong/cscope.vim
+" ignore stat dir when build db for SLV
+let g:cscope_ignored_dir = '/Users/shaofsh/SLV/workspaces/EasyTierWorkspace/src/user/sl/stat$\|/Users/shaofsh/SLV/ReadCode/src/sl/stat$\|/Users/shaofsh/SLV/workspaces/easyTierFuture/src/sl/stat$'
+
+let g:tagbar_show_linenumbers = 0
+
+set showtabline=0
+
+if has('gui_running')
+    let g:solarized_contrast = 'high'
+    set antialias
+    "set background=dark
+    colorscheme solarized
+    set guifont=DejaVuSansMonoPowerline:h11
+    set lines=70 columns=200
+    "set fu
+else
+    set background=dark
+    colorscheme cobalt2
+endif
+
+
+autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql setlocal foldmethod=syntax
+
+" disable bufferline in status line, to avoid conflict with airline
+let g:airline#extensions#bufferline#enabled = 0
+
+" display the number of window in statusline {
+" https://github.com/vim-airline/vim-airline/issues/1572
+function! WindowNumber(...)
+    let builder = a:1
+    let context = a:2
+    call builder.add_section('airline_b', '%{tabpagewinnr(tabpagenr())}')
+    return 0
+endfunction
+call airline#add_statusline_func('WindowNumber')
+call airline#add_inactive_statusline_func('WindowNumber')
+" }
+
+" restore C-e, which mapped by NerdTree
+unmap <C-e>
+
+" don't strip trailing whitespaces for all files
+" I have my own autocmd for this {
+let g:spf13_keep_trailing_whitespace = 1
+autocmd! FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql
+" in SVC's directories, don't touch their ugly trailing whitespaces.
+augroup TrailingSpaces
+    autocmd!
+    autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('b:noStripWhitespace') | call StripTrailingWhitespace() | endif
+augroup END
+augroup SpecialProject
+    autocmd!
+    autocmd BufReadPost ~/SLV/workspaces/** let b:noStripWhitespace=1
+augroup END
+" }
+
+" cscope key mappings {
+" key mapping for cscope
+" C-@ not work on OSX due to spotlight
+    "
+    "   's'   symbol: find all references to the token under cursor
+    "   'g'   global: find global definition(s) of the token under cursor
+    "   'c'   calls:  find all calls to the function name under cursor
+    "   't'   text:   find all instances of the text under cursor
+    "   'e'   egrep:  egrep search for the word under cursor
+    "   'f'   file:   open the filename under cursor
+    "   'i'   includes: find files that include the filename under cursor
+    "   'd'   called: find functions that function under cursor calls
+nmap <C-\>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-\>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-\>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+
+function! TrimJumpListAndCscopeFind(action, word)
+    if has('jumplist')
+        if exists('*trimjumplist')
+            let jl = getjumplist()
+            call trimjumplist(len(jl[0]) - str2nr(jl[1]))
+        endif
+    endif
+    call CscopeFind(a:action, a:word)
+endfunction
+
+nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
+nnoremap <leader>ll :call ToggleLocationList()<CR>
+" s: Find this C symbol
+nnoremap  <leader>fs :call CscopeFind('s', expand('<cword>'))<CR>
+" g: Find this definition
+nnoremap  <leader>fg :call TrimJumpListAndCscopeFind('g', expand('<cword>'))<CR>
+" d: Find functions called by this function
+nnoremap  <leader>fd :call CscopeFind('d', expand('<cword>'))<CR>
+" c: Find functions calling this function
+nnoremap  <leader>fc :call CscopeFind('c', expand('<cword>'))<CR>
+" t: Find this text string
+nnoremap  <leader>ft :call CscopeFind('t', expand('<cword>'))<CR>
+" e: Find this egrep pattern
+nnoremap  <leader>fe :call CscopeFind('e', expand('<cword>'))<CR>
+" f: Find this file
+nnoremap  <leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
+" i: Find files #including this file
+nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
+" }
+
+" fix neocomplete's <CR> behaviour {
+if count(g:spf13_bundle_groups, 'neocomplete')
+    if !exists('g:spf13_noninvasive_completion')
+        function! CleverCr()
+            if pumvisible()
+                if neosnippet#expandable()
+                    let exp = "\<Plug>(neosnippet_expand)"
+                    return exp . neocomplete#smart_close_popup()
+                else
+                    return "\<C-y>"
+                    "return "\<C-y>\<CR>"
+                endif
+            else
+                return "\<CR>"
+            endif
+        endfunction
+
+        " <CR> close popup and save indent or expand snippet
+        imap <expr> <CR> CleverCr()
+    endif
+endif
+"}
+
+" key mappings for location list {
+    nnoremap <leader>ln :lnext<CR>
+    nnoremap <leader>lp :lprevious<CR>
+" }
