@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/Applications/MacVim.app/Contents/bin/:$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/shaofeng/.oh-my-zsh"
@@ -69,7 +69,8 @@ CASE_SENSITIVE="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-prompt)
+#plugins=(git git-prompt)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -99,9 +100,12 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# don't share history, which is very annoying.
+unsetopt share_history
+
 HOME_GIT_REPO=${HOME}/mygithub/sevenever/home
 ACCOUNT_FILE=${HOME}/notes/account.txt
-PROJECT_HOME="${HOME}/workitems"
+PROJECT_HOME="${HOME}/TL"
  
 #execute initialization script in ~/.bash.d/
 if [ -d ~/.bash.d/ ]; then
@@ -119,3 +123,9 @@ fi
 
 # hide the “user@hostname” info when you’re logged in as yourself on your local machine
 prompt_context(){}
+# this is needed for showing only brach name if there is a lot of branches/tags in a repo and git config oh-my-zsh.hide-status is set to 1 to speed up prompt
+setopt prompt_subst
+. ~/.git-prompt.sh
+
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.aliyun.com/homebrew/homebrew-bottles
+

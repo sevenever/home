@@ -5,7 +5,7 @@ cmvclogin() {
     cmvclog -in "${account}" -family $CMVC_FAMILY -noprompt "${passwd}"
 }
 
-DEFECT_HOME="${PROJECT_HOME}/defect"
+DEFECT_HOME="${PROJECT_HOME}/issues"
 PCR_HOME="${PROJECT_HOME}/DCR"
 cmvc(){
 	if [[ $# -ne 1 ]]
@@ -17,7 +17,7 @@ cmvc(){
 	cd "${DEFECT_HOME}"
 	mkdir -p ${cmvcnumber}
 	cd ${cmvcnumber}
-	mvim ${cmvcnumber}.screen
+	mvim ${cmvcnumber}.note
 }
 
 pcr(){

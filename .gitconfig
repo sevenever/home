@@ -12,9 +12,9 @@
 [mergetool]
 	prompt = false
 [difftool "mvimdiff"]
-    cmd = /usr/local/bin/mvim -f -d \"$LOCAL\" \"$REMOTE\"
+    cmd = /Users/shaofeng/Applications/MacVim.app/Contents/bin/mvimdiff -f -d \"$LOCAL\" \"$REMOTE\"
 [core]
-	editor = /usr/local/bin/mvim -f
+	editor = /Users/shaofeng/Applications/MacVim.app/Contents/bin/mvim -f
 [user]
 	name = Feng Shao
 	email = feng.shao@acoustic.com
