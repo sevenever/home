@@ -5,18 +5,20 @@
 	required = true
 	clean = git-lfs clean %f
 [diff]
-	tool = mvimdiff
+	tool = gvimdiff
 [merge]
 	tool = gvimdiff
 	conflictstyle = diff3
 [mergetool]
 	prompt = false
-[difftool "mvimdiff"]
-    cmd = /Users/shaofeng/Applications/MacVim.app/Contents/bin/mvimdiff -f -d \"$LOCAL\" \"$REMOTE\"
+[difftool "gvimdiff"]
+    cmd = gvimdiff -f -d \"$LOCAL\" \"$REMOTE\"
 [core]
-	editor = /Users/shaofeng/Applications/MacVim.app/Contents/bin/mvim -f
+	editor = gvim
 [user]
 	name = Feng Shao
-	email = feng.shao@acoustic.com
-[includeIf "gitdir:~/mygithub/"]
-	path = ~/mygithub/.gitconfig
+	email = sevenever@gmail.com
+[push]
+	default = simple
+[credential]
+	helper = cache
