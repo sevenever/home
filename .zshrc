@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/Applications/MacVim.app/Contents/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/shaofeng/.oh-my-zsh"
@@ -129,3 +129,5 @@ setopt prompt_subst
 
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.aliyun.com/homebrew/homebrew-bottles
 
+# to enable C-S to save in vim
+stty -ixon

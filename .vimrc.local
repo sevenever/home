@@ -139,3 +139,12 @@ endif
     nnoremap <leader>ln :lnext<CR>
     nnoremap <leader>lp :lprevious<CR>
 " }
+
+
+" C-S to save file {
+" also need to set term to pass C-S to application by setting 
+" stty -ixon in .zshrc or .bashrc
+noremap <silent> <C-S>          :update<CR>
+vnoremap <silent> <C-S>         <C-C>:update<CR>
+inoremap <silent> <C-S>         <C-O>:update<CR>
+" }
