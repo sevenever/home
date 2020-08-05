@@ -72,6 +72,9 @@ CASE_SENSITIVE="true"
 #plugins=(git git-prompt)
 plugins=(git)
 
+# this need to be put before oh-my-zsh
+fpath=($fpath ~/.zsh_completion.d)
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -115,10 +118,6 @@ if [ -d ~/.bash.d/ ]; then
     fi
   done
   unset i
-fi
-
-if [ -r ~/.bash_completion ]; then
-    . ~/.bash_completion
 fi
 
 # hide the “user@hostname” info when you’re logged in as yourself on your local machine

@@ -1,0 +1,10 @@
+#compdef cmvc
+
+local -a subcmds
+ls ${DEFECT_HOME} | while read -r c;do
+    subcmds+=("${c}")
+done
+
+_describe "command" subcmds
+
+return 0

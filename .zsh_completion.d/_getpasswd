@@ -1,0 +1,10 @@
+#compdef getpasswd getaccount cppasswd
+
+local -a subcmds
+getpasswd -l | while read -r c;do
+    subcmds+=("${c}")
+done
+
+_describe "command" subcmds
+
+return 0
