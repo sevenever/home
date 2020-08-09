@@ -102,6 +102,9 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+if [ -r ${HOME}/.bash_aliases ];then
+    . ${HOME}/.bash_aliases
+fi
 
 # don't share history, which is very annoying.
 unsetopt share_history
@@ -121,7 +124,7 @@ if [ -d ~/.bash.d/ ]; then
 fi
 
 # hide the “user@hostname” info when you’re logged in as yourself on your local machine
-prompt_context(){}
+#prompt_context(){}
 # this is needed for showing only brach name if there is a lot of branches/tags in a repo and git config oh-my-zsh.hide-status is set to 1 to speed up prompt
 setopt prompt_subst
 . ~/.git-prompt.sh
