@@ -1,4 +1,10 @@
 " vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+"
+
+if LINUX()
+    nnoremap <C-Up> :silent! let &guifont = substitute( &guifont, '\zs\d\+', '\=eval(submatch(0)+1)', 'g')<CR>
+    nnoremap <C-Down> :silent! let &guifont = substitute( &guifont, '\zs\d\+', '\=eval(submatch(0)-1)', 'g')<CR>
+endif
 
 nnoremap Q <nop>
 
@@ -17,7 +23,11 @@ if has('gui_running')
     set antialias
     "set background=dark
     colorscheme solarized
-    set guifont=DejaVuSansMonoPowerline:h11
+    if LINUX()
+        set guifont=DejaVu\ Sans\ Mono\ 10
+    elseif OSX()
+        set guifont=DejaVuSansMonoPowerline:h11
+    endif
     set lines=70 columns=200
     "set fu
 else
