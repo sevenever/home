@@ -38,6 +38,7 @@ endif
 
 
 autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql setlocal foldmethod=syntax
+autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql setlocal nospell
 
 " disable bufferline in status line, to avoid conflict with airline
 let g:airline#extensions#bufferline#enabled = 0
@@ -60,7 +61,7 @@ unmap <C-e>
 " don't strip trailing whitespaces for all files
 " I have my own autocmd for this {
 let g:spf13_keep_trailing_whitespace = 1
-autocmd! FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql
+"autocmd! FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql
 " in SVC's directories, don't touch their ugly trailing whitespaces.
 augroup TrailingSpaces
     autocmd!
@@ -68,7 +69,7 @@ augroup TrailingSpaces
 augroup END
 augroup SpecialProject
     autocmd!
-    autocmd BufReadPost ~/SLV/workspaces/** let b:noStripWhitespace=1
+    autocmd BufReadPost ~/github/aipoweredmarketer/tl-saas/** let b:noStripWhitespace=1
 augroup END
 " }
 
