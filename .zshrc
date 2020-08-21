@@ -1,3 +1,4 @@
+# vim set ft=zsh
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -112,6 +113,10 @@ unsetopt share_history
 HOME_GIT_REPO=${HOME}/mygithub/sevenever/home
 ACCOUNT_FILE=${HOME}/notes/account.txt
 PROJECT_HOME="${HOME}/TL"
+
+if [ -e ~/.zshrc.local ];then
+    . ~/.zshrc.local
+fi
  
 #execute initialization script in ~/.bash.d/
 if [ -d ~/.bash.d/ ]; then
