@@ -6,3 +6,5 @@ UnBundle 'brookhong/cscope.vim'
 
 Plugin 'heracek/HTML-AutoCloseTag', {'name': 'HTML-AutoCloseTag2'}
 UnBundle 'amirh/HTML-AutoCloseTag'
+
+UnBundle 'bling/vim-bufferline'
