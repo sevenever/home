@@ -138,3 +138,11 @@ export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.aliyun.com/homebrew/homebrew-bottl
 
 # to enable C-S to save in vim
 stty -ixon
+
+# pbcopy/pbpaste on Linux
+case "$(uname -s)" in
+    Linux*)
+        alias pbcopy='xclip -selection clipboard'
+        alias pbpaste='xclip -selection clipboard -o'
+        ;;
+esac
