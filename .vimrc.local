@@ -1,4 +1,4 @@
-" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell syntax=vim:
 "
 
 if LINUX()
@@ -36,6 +36,14 @@ else
     colorscheme cobalt2
 endif
 
+" Use work vimrc if available {
+if filereadable(expand("~/.vimrc.work"))
+    source ~/.vimrc.work
+endif
+" }
+
+set modelines=5
+
 " key mappings {
 " swap 0 and _ for programming
 nnoremap 0 _
@@ -45,10 +53,16 @@ unmap <C-e>
 
 "}
 
-autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql setlocal nospell foldmethod=syntax
+set nospell
+"autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql setlocal nospell foldmethod=manual
 
 " disable bufferline in status line, to avoid conflict with airline
 let g:airline#extensions#bufferline#enabled = 0
+" show buffer number in airline
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+" use :FormatXML to format current xml buffer
+com! FormatXML :%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
 
 " display the number of window in statusline {
 " https://github.com/vim-airline/vim-airline/issues/1572
@@ -69,10 +83,6 @@ let g:spf13_keep_trailing_whitespace = 1
 augroup TrailingSpaces
     autocmd!
     autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('b:noStripWhitespace') | call StripTrailingWhitespace() | endif
-augroup END
-augroup SpecialProject
-    autocmd!
-    autocmd BufReadPost ~/github/aipoweredmarketer/tl-saas/** setlocal noexpandtab | let b:noStripWhitespace=1
 augroup END
 " }
 
@@ -227,10 +237,22 @@ inoremap <silent> <C-S>         <C-O>:update<CR>
     nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
     " GoTo code navigation.
-    nmap <silent> gd <Plug>(coc-definition)
+ function! TrimJumpListAndCocDefinition()
+     if has('jumplist')
+         if exists('*trimjumplist')
+             let jl = getjumplist()
+             call trimjumplist(len(jl[0]) - str2nr(jl[1]))
+         endif
+     endif
+     call       CocActionAsync('jumpDefinition')
+ endfunction
+
+    "nmap <silent> gd <Plug>(coc-definition)
+    nmap <silent> gd :call TrimJumpListAndCocDefinition()<CR>
     nmap <silent> gy <Plug>(coc-type-definition)
     nmap <silent> gi <Plug>(coc-implementation)
     nmap <silent> gr <Plug>(coc-references)
+    nmap <leader>la :CocAction<CR>
 
     " Use K to show documentation in preview window.
     nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -318,4 +340,9 @@ inoremap <silent> <C-S>         <C-O>:update<CR>
     nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
     " Resume latest coc list.
     nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+    augroup COCClassNomodifiable
+        autocmd!
+        autocmd BufFilePost,BufNewFile,BufReadPost *.class setlocal nomodifiable
+    augroup END
 " }
