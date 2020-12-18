@@ -146,3 +146,6 @@ case "$(uname -s)" in
         alias pbpaste='xclip -selection clipboard -o'
         ;;
 esac
+
+# make ctrl-u behavior like bash
+bindkey \^U backward-kill-line
