@@ -20,6 +20,6 @@
 #}
 #complete -F _known_hosts sshforget
 
-genpw () { echo -n $1 | md5 | python3 -c 'import sys; print("".join(dict(zip("0123456789abcdef","0!2#$%^789@BCdef"))[c] for c in sys.stdin.read().strip()))'; }
+genpw () { echo -n $1 | md5sum | cut -d ' ' -f 1 | python3 -c 'import sys; print("".join(dict(zip("0123456789abcdef","0!2#$%^789@BCdef"))[c] for c in sys.stdin.read().strip()))'; }
 
 
