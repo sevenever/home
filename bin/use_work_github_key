@@ -1,0 +1,18 @@
+#!/usr/bin/python3
+
+import os,sys
+
+cwd = os.getcwd()
+
+use_work_key = False
+while True:
+    if cwd == '/':
+        break
+    cwd, t = os.path.split(cwd)
+    if t in ["acoustic"]:
+        use_work_key = True
+        break
+
+if len(sys.argv) > 1 and sys.argv[1] == '-r':
+    use_work_key = not use_work_key
+sys.exit(0 if use_work_key else 1)
