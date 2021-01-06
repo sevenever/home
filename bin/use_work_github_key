@@ -2,15 +2,19 @@
 
 import os,sys
 
+on_work_machine='1' == os.environ.get('ON_WORK_MACHINE')
 cwd = os.getcwd()
 
-use_work_key = False
+use_work_key = on_work_machine
 while True:
     if cwd == '/':
         break
     cwd, t = os.path.split(cwd)
     if t in ["acoustic"]:
         use_work_key = True
+        break
+    if t in ["mygithub"]:
+        use_work_key = False
         break
 
 if len(sys.argv) > 1 and sys.argv[1] == '-r':
